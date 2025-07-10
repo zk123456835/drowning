@@ -1,0 +1,21 @@
+{
+  "pages": [
+  "pages/index/index",
+  "pages/function/function",
+  "pages/patrol/patrol", 
+  "pages/education/education", 
+  "pages/history/history"   
+],
+"window": {
+  "navigationBarBackgroundColor": "#1E90FF",
+  "navigationBarTitleText": "智能水上救生系统",
+  "navigationBarTextStyle": "white",
+  "backgroundColor": "#f5f5f5"
+},
+"permission": {
+  "scope.userLocation": {
+    "desc": "需要获取您的位置信息以提供救援服务"
+  }
+},
+"style": "v2"
+}
