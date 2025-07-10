@@ -1,0 +1,14 @@
+
+{
+  "pages": [
+    "pages/index/index",
+    "pages/function/function"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#ffffff",
+    "navigationBarTitleText": "智能水上救生系统",
+    "navigationBarTextStyle": "black"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

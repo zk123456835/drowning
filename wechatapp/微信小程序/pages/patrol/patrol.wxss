@@ -1,0 +1,101 @@
+/* pages/patrol/patrol.wxss */
+.container {
+  padding: 20rpx;
+}
+
+.header {
+  background: linear-gradient(to right, #1E90FF, #00BFFF);
+  padding: 30rpx;
+  border-radius: 20rpx;
+  margin-bottom: 30rpx;
+}
+
+.title {
+  font-size: 38rpx;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+}
+
+.card {
+  background-color: white;
+  border-radius: 20rpx;
+  padding: 30rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.08);
+}
+
+.section {
+  margin-bottom: 30rpx;
+  padding-bottom: 30rpx;
+  border-bottom: 1rpx solid #eee;
+}
+
+.section:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  display: block;
+  margin-bottom: 10rpx;
+}
+
+.section-content {
+  font-size: 30rpx;
+  color: #666;
+}
+
+.status {
+  display: flex;
+  align-items: center;
+}
+
+.status-icon {
+  width: 40rpx;
+  height: 40rpx;
+  margin-right: 15rpx;
+}
+
+.status-text {
+  font-size: 32rpx;
+  font-weight: bold;
+}
+
+.safe {
+  color: #4CAF50;
+}
+
+.warning {
+  color: #FF5722;
+}
+
+.warning-text {
+  color: #FF5722;
+  font-weight: bold;
+}
+
+.action-btn {
+  background-color: #1E90FF;
+  color: white;
+  margin: 40rpx auto 20rpx;
+  width: 80%;
+  border-radius: 50rpx;
+}
+
+.back-btn {
+  background-color: #f5f5f5;
+  color: #666;
+  margin: 20rpx auto;
+  width: 80%;
+  border-radius: 50rpx;
+}
+
+.loading {
+  text-align: center;
+  padding: 20rpx 0;
+  color: #999;
+}

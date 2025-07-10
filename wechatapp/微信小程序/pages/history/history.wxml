@@ -1,0 +1,43 @@
+<!--pages/history/history.wxml-->
+<view class="container">
+  <view class="header">
+    <text class="title">历史救援数据</text>
+  </view>
+  
+  <!-- 统计卡片 -->
+  <view class="stats">
+    <view class="stat-card">
+      <text class="stat-value">{{totalRescues}}</text>
+      <text class="stat-label">总救援次数</text>
+    </view>
+    <view class="stat-card">
+      <text class="stat-value">{{successRate}}%</text>
+      <text class="stat-label">成功率</text>
+    </view>
+    <view class="stat-card">
+      <text class="stat-value">{{avgResponse}}分钟</text>
+      <text class="stat-label">平均响应</text>
+    </view>
+  </view>
+  
+  <!-- 历史记录列表 -->
+  <view class="list">
+    <view class="list-header">
+      <text class="header-item">时间</text>
+      <text class="header-item">地点</text>
+      <text class="header-item">结果</text>
+    </view>
+    
+    <scroll-view scroll-y style="height: 60vh;">
+      <block wx:for="{{historyList}}" wx:key="index">
+        <view class="list-item {{item.status === '成功' ? 'success' : 'fail'}}">
+          <text class="item">{{item.time}}</text>
+          <text class="item">{{item.location}}</text>
+          <text class="item">{{item.status}}</text>
+        </view>
+      </block>
+    </scroll-view>
+  </view>
+  
+  <button class="back-btn" bindtap="goBack">返回首页</button>
+</view>
