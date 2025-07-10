@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>{pboot:if('{sort:title}'=='')}{pboot:pagetitle}{else}{sort:title}{/pboot:if}</title>
+<meta name="keywords" content="{pboot:if('{sort:keywords}'=='')}{pboot:pagekeywords}{else}{sort:keywords}{/pboot:if}">
+<meta name="description" content="{pboot:if('{sort:description}'=='')}{pboot:pagedescription}{else}{sort:description}{/pboot:if}">
+<link href="{pboot:sitedomain}/skin/css/css.css" rel="stylesheet" type="text/css" />
+<link href="{pboot:sitedomain}/skin/css/nav_menu.css" rel="stylesheet" type="text/css" />
+<link href="{pboot:sitedomain}/skin/css/banner.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="{pboot:sitedomain}/skin/css/aos.css" />
+<link rel="stylesheet" href="{pboot:sitedomain}/skin/css/iconfont.css">
+<link rel="stylesheet" href="{pboot:sitedomain}/skin/css/swiper.min.css">
+<script type="text/javascript" src="{pboot:sitedomain}/skin/js/jquery.min.js"></script>
+<script type="text/javascript" src="{pboot:sitedomain}/skin/js/nav.js"></script>
+<!--[if IE 6]><script src="{pboot:sitedomain}/skin/js/iepng.js" type="text/javascript"></script><![endif]-->
+<!--图片滚动通用脚本-->
+<script src="{pboot:sitedomain}/skin/js/swiper.min.js"></script>
+<script src="{pboot:sitedomain}/skin/js/swiperb.js"></script>
+<!--/图片滚动通用脚本-->
+</head>
+
+<body>
+<!--头部--> 
+{include file=comm/top.html} 
+<!--/头部--> 
+<!--中间-->
+<div class="wik pa1 oveh"> {include file=comm/left.html} 
+  <!--右边-->
+  <div class="wfr wk2">
+    <div class="lmt oveh">
+      <p class="lmt_1">{sort:name}</p>
+      <p class="lmt_2"><i class="icon iconfont">&#xe607;</i> 您的位置：{pboot:position separator=' > '}</p>
+    </div>
+    {pboot:list num=8 order=date}
+    <div class="fnes">
+      <p> <span>[list:date style=d]</span><br />
+        [list:date style=Y-m] </p>
+      <dl>
+        <a href="[list:link]" target="_blank">
+        <dt> [list:title]</dt>
+        <dd> [list:description len=100] </dd>
+        </a>
+      </dl>
+    </div>
+    {/pboot:list}
+    <div class="ym">
+    <a href="{page:index}">首页</a>
+    <a href="{page:pre}">上一页</a>
+    {page:numbar}
+    <a href="{page:next}">下一页</a>
+    <a href="{page:last}">尾页</a>
+    <a>{page:status}</a>
+    <div class="clear"></div>
+    <div class="clear"></div>
+</div>
+  </div>
+  <!--右边end--> 
+</div>
+<!--中间end--> 
+{include file=comm/foot.html}
+</body>
+</html>

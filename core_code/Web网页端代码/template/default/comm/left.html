@@ -1,0 +1,48 @@
+<!--左边-->
+<div class="wfl wk1">
+  <div class="fenk oveh"> {pboot:sort scode={sort:tcode}}
+    <div class="fent">[sort:name] <br />
+      <span>[sort:subname]</span></div>
+    {/pboot:sort}
+    <div class="fenm">
+      <ul>
+        {pboot:if({sort:tcode}==3)}
+        {pboot:nav parent={sort:tcode}}
+        <li {pboot:2if([nav:scode]=={sort:scode})}class="cuh"{/pboot:2if}><a href="[nav:link]">[nav:name]</a></li>
+        {/pboot:nav}
+        {else}
+        <li><a href="{sort:link}">{sort:name}</a></li>
+        {/pboot:if}
+      </ul>
+    </div>
+    <div class="fend">
+      <div class="fendt">联系我们 <span>Contact Us</span></div>
+      <div>
+        <table width="197" border="0" cellspacing="0" cellpadding="0" class="ke-zeroborder">
+          <tbody>
+            <tr>
+              <td valign="top"><span>手机：</span></td>
+              <td valign="top"> {pboot:companymobile}<span><br />
+                </span></td>
+            </tr>
+            <tr>
+              <td valign="top"><span>电话：</span></td>
+              <td valign="top"><span>{pboot:companyphone}</span></td>
+            </tr>
+          </tbody>
+          <tbody>
+            <tr>
+              <td width="43" valign="top"><span>传真：</span></td>
+              <td width="154" valign="top"><span>{pboot:companyfax}</span></td>
+            </tr>
+            <tr>
+              <td valign="top"><span>地址：</span></td>
+              <td valign="top"><span>{pboot:companyaddress}</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<!--左边end-->

@@ -1,0 +1,47 @@
+<div class="tok oveh">
+  <div class="wik">
+    <div class="tot1">{label:top}</div>
+    <div class="tot2"> 咨询电话： {pboot:companyphone} </div>
+  </div>
+</div>
+<div class="wik">
+  <div class="logo"><a href="{pboot:sitedomain}/"><img src="{pboot:sitelogo}"></a></div>
+  <div class="nav">
+    <div class="nav_menu">
+      <ul>
+        <li><a href="{pboot:sitedomain}/" {pboot:if(0=='{sort:scode}')}class="nah"{/pboot:if}>首页<br />
+          <span>Home</span></a></li>
+        {pboot:nav}
+        <li><a {pboot:if('[nav:scode]'=='{sort:tcode}')}class="nah"{/pboot:if} href="[nav:link]">[nav:name]<br />
+          <span>[nav:subname]</span></a> {pboot:if([nav:soncount]>0)}
+          <ul>
+            {pboot:2nav parent=[nav:scode]}
+            <li><a href="[2nav:link]">[2nav:name]</a></li>
+            {/pboot:2nav}
+          </ul>
+          {/pboot:if} </li>
+        {/pboot:nav}
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="bak oveh">
+  <div class="flexslider">
+    <ul class="slides">
+      {pboot:slide gid=1 num=10}
+      <li style="background:url([slide:src]) no-repeat top center;"><a href="[slide:link]"></a></li>
+      {/pboot:slide}
+    </ul>
+  </div>
+  <script src="{pboot:sitedomain}/skin/js/jquery.flexslider-min.js"></script> 
+  <script>
+        $(function() {
+            $('.flexslider').flexslider({
+                directionNav: true,
+                pauseOnAction: false,
+                slideshow: true,
+                slideshowSpeed: 4000,
+            });
+        });
+        </script> 
+</div>

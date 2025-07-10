@@ -1,0 +1,43 @@
+<!--底部-->
+<div class="dwb oveh">
+  <div class="wik">
+    <div class="dw1"> <img src="{pboot:companyweixin}" width="128" height="128" alt="" /><br />
+    </div>
+    <div class="dw2">
+      <div class="dw3"> <a href="{pboot:sitedomain}/">首页</a> {pboot:nav num=7} <span>/</span> <a href="[nav:link]">[nav:name]</a> {/pboot:nav} </div>
+      <div class="dw4">
+        <p> {pboot:sitecopyright} </p>
+        <p><a href="https://beian.miit.gov.cn/" target="_blank" rel="nofollow">{pboot:siteicp}</a> <a href="{pboot:sitedomain}/index.php/sitemap.xml" target="_blank">XML地图</a> 技术支持：<a href="https://www.pb2345.com/" target="_blank">PB2345</a> {pboot:sitestatistical}</p>
+      </div>
+    </div>
+  </div>
+</div>
+<!--/底部--> 
+<!--浮动-->
+<div class="suspension">
+  <div class="suspension-box"> <a href="javascript:;" class="a a-top"><i class="i"></i></a> </div>
+</div>
+<script type="text/javascript" src="{pboot:sitedomain}/skin/js/ce.js"></script> 
+<!--浮动--> 
+<!--动画脚本--> 
+<script src="{pboot:sitedomain}/skin/js/scrollReveal.js"></script> 
+<script>
+(function() {
+    window.scrollReveal = new scrollReveal({ reset: true, move: '50px' });
+})();
+</script> 
+<script type="text/javascript" src="{pboot:sitedomain}/skin/js/aos.js"></script> 
+<script type="text/javascript">
+AOS.init({
+    easing: 'ease-out-back',
+    duration: 1000
+});
+</script> 
+<script>
+$('.hero__scroll').on('click', function(e) {
+    $('html, body').animate({
+        scrollTop: $(window).height()
+    }, 1200);
+});
+</script> 
+<!--/动画脚本--> 

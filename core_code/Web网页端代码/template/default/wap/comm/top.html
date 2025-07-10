@@ -1,0 +1,38 @@
+<!--导航-->
+<div class="drawer-main drawer-default">
+  <div class="drawer-nav">
+    <div class="pa1">
+      <div class="nav">
+        <ul>
+          <li><a href="{pboot:sitedomain}/">首页 Home<i class="icon iconfont icon-jiantou1"></i></a></li>
+          {pboot:nav}
+          <li><a href="[nav:link]">[nav:name] [nav:subname]<i class="icon iconfont icon-jiantou1"></i></a></li>
+          {/pboot:nav}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<!--/导航--> 
+<!--头部-->
+<header class="topk">
+  <div class="topp wbt he1" id="header">
+    <div class="tom"><a href="{pboot:sitedomain}/"><img src="{pboot:sitelogo}" alt="" /></a></div>
+    <div class="tor"> <a href="javascript:void(0)"><i class="icon iconfont icon-fenlei js-trigger"></i></a> </div>
+  </div>
+</header>
+<!--/头部-->
+<div class="he1"></div>
+<section id="banner">
+  <div class="swipe">
+    <ul id="slider">
+      {pboot:slide gid=2 num=10}
+      <li><img src="[slide:src]" alt="" /></li>
+      {/pboot:slide}
+    </ul>
+    <div id="pagenavi"> <a href="javascript:void(0);" class="active"></a> <a href="javascript:void(0);"></a> </div>
+  </div>
+  <script type="text/javascript" src="{pboot:sitedomain}/m/js/touchScroll.js"></script> 
+  <script type="text/javascript" src="{pboot:sitedomain}/m/js/touchslider.dev.js"></script> 
+  <script type="text/javascript" src="{pboot:sitedomain}/m/js/banner.js"></script> 
+</section>

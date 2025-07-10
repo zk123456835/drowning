@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>基于rk3588的智能水上救生系统</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --deep-blue: #0a192f;
+            --ocean-blue: #1a3a5f;
+            --tech-blue: #00b4d8;
+            --light-blue: #90e0ef;
+            --accent: #ff6b6b;
+            --text-light: #e6f1ff;
+            --text-gray: #8892b0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, var(--deep-blue) 0%, #040d21 100%);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            padding: 40px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(0, 180, 216, 0.1) 0%, transparent 70%);
+            z-index: -1;
+        }
+        
+        .logo {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--tech-blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .logo i {
+            font-size: 3rem;
+        }
+        
+        .tagline {
+            font-size: 1.2rem;
+            color: var(--text-gray);
+            max-width: 800px;
+            margin: 0 auto 30px;
+            font-weight: 300;
+        }
+        
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .stat-box {
+            background: rgba(26, 58, 95, 0.7);
+            border: 1px solid rgba(0, 180, 216, 0.3);
+            border-radius: 10px;
+            padding: 20px 30px;
+            text-align: center;
+            min-width: 200px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+        
+        .stat-box:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--tech-blue);
+            margin-bottom: 5px;
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        .stat-label {
+            font-size: 1rem;
+            color: var(--text-gray);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        /* Problem Section */
+        .problem-section {
+            padding: 80px 0;
+            background: rgba(10, 25, 47, 0.8);
+            position: relative;
+        }
+        
+        .problem-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(26, 58, 95, 0.3) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(26, 58, 95, 0.3) 0%, transparent 20%);
+            z-index: -1;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .section-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--tech-blue);
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: var(--tech-blue);
+        }
+        
+        .problem-container {
+            display: flex;
+            gap: 40px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .problem-card {
+            background: rgba(26, 58, 95, 0.6);
+            border: 1px solid rgba(0, 180, 216, 0.3);
+            border-radius: 15px;
+            padding: 30px;
+            flex: 1;
+            min-width: 300px;
+            max-width: 500px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .problem-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 180, 216, 0.2);
+        }
+        
+        .problem-card h3 {
+            color: var(--accent);
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .problem-card h3 i {
+            color: var(--tech-blue);
+        }
+        
+        /* Solution Section */
+        .solution-section {
+            padding: 80px 0;
+            position: relative;
+        }
+        
+        .solution-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 50px;
+        }
+        
+        .feature-card {
+            background: rgba(26, 58, 95, 0.7);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            border: 1px solid rgba(0, 180, 216, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--tech-blue);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s ease;
+        }
+        
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .feature-icon {
+            font-size: 3.5rem;
+            color: var(--tech-blue);
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+        
+        .feature-card:hover .feature-icon {
+            transform: scale(1.1);
+        }
+        
+        .feature-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: var(--light-blue);
+        }
+        
+        /* Technology Section - 更新了图片展示样式 */
+        .tech-section {
+            padding: 80px 0;
+            position: relative;
+            background: url('/111.jpg') no-repeat center center;
+            background-size: cover;
+            z-index: 1;
+        }
+        
+        .tech-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(10, 25, 47, 0.9) 0%, rgba(4, 13, 33, 0.85) 100%);
+            z-index: -1;
+        }
+        
+        .tech-section::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(26, 58, 95, 0.3) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(26, 58, 95, 0.3) 0%, transparent 20%);
+            z-index: -2;
+        }
+        
+        .tech-highlight {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            margin: 60px 0;
+            flex-wrap: wrap;
+        }
+        
+        .chip-image {
+            flex: 1;
+            min-width: 300px;
+            background: rgba(26, 58, 95, 0.6);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            border: 1px solid rgba(0, 180, 216, 0.3);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+        
+        .chip-image:hover {
+            transform: translateY(-10px);
+        }
+        
+        .chip-image h3 {
+            color: var(--tech-blue);
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .chip-image .chip-img-container {
+            position: relative;
+            margin: 0 auto 20px;
+            width: 100%;
+            height: 220px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border-radius: 12px;
+            background: rgba(10, 25, 47, 0.7);
+            border: 1px solid rgba(0, 180, 216, 0.3);
+        }
+        
+        .chip-image .chip-img-container img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            transition: transform 0.5s ease;
+        }
+        
+        .chip-image:hover .chip-img-container img {
+            transform: scale(1.05);
+        }
+        
+        .chip-image .chip-img-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(0, 180, 216, 0.1) 0%, transparent 70%);
+            z-index: 1;
+        }
+        
+        .chip-image p {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .chip-specs {
+            flex: 1;
+            min-width: 300px;
+            background: rgba(26, 58, 95, 0.5);
+            border-radius: 15px;
+            padding: 30px;
+            border: 1px solid rgba(0, 180, 216, 0.3);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+        
+        .chip-specs:hover {
+            transform: translateY(-5px);
+        }
+        
+        .spec-item {
+            margin-bottom: 25px;
+            position: relative;
+            padding-left: 35px;
+        }
+        
+        .spec-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 5px;
+            width: 20px;
+            height: 20px;
+            background: rgba(0, 180, 216, 0.2);
+            border-radius: 50%;
+        }
+        
+        .spec-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--light-blue);
+        }
+        
+        .spec-title i {
+            color: var(--tech-blue);
+        }
+        
+        .spec-value {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--tech-blue);
+            font-family: 'Orbitron', sans-serif;
+            margin-bottom: 8px;
+            display: block;
+        }
+        
+        /* Video Section - 更新样式 */
+        .video-section {
+            padding: 80px 0;
+            position: relative;
+            background: rgba(10, 25, 47, 0.6);
+        }
+        
+        .video-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .video-card {
+            background: rgba(26, 58, 95, 0.7);
+            border-radius: 15px;
+            padding: 20px;
+            width: 100%;
+            border: 1px solid rgba(0, 180, 216, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+        }
+        
+        .video-player {
+            width: 100%;
+            height: 500px;
+            background: #000;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .video-player video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .video-placeholder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--ocean-blue) 0%, var(--deep-blue) 100%);
+            color: var(--light-blue);
+            font-size: 1.2rem;
+            text-align: center;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .video-placeholder:hover {
+            background: linear-gradient(135deg, #1c4370 0%, #07152d 100%);
+        }
+        
+        .video-placeholder i {
+            font-size: 5rem;
+            margin-bottom: 20px;
+            color: var(--tech-blue);
+            transition: transform 0.3s ease;
+        }
+        
+        .video-placeholder:hover i {
+            transform: scale(1.1);
+        }
+        
+        .video-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .video-actions {
+            display: flex;
+            gap: 10px;
+            width: 100%;
+            justify-content: center;
+        }
+        
+        .upload-btn, .video-btn {
+            background: var(--tech-blue);
+            color: var(--deep-blue);
+            border: none;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 220px;
+            justify-content: center;
+            font-size: 1.1rem;
+        }
+        
+        .video-btn {
+            background: rgba(26, 58, 95, 0.8);
+            color: var(--light-blue);
+            border: 1px solid var(--tech-blue);
+        }
+        
+        .upload-btn:hover, .video-btn:hover {
+            background: var(--light-blue);
+            color: var(--deep-blue);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 180, 216, 0.4);
+        }
+        
+        .video-description {
+            color: var(--text-gray);
+            text-align: center;
+            max-width: 700px;
+            margin-top: 15px;
+            line-height: 1.7;
+            width: 100%;
+        }
+        
+        .upload-container {
+            display: none;
+        }
+        
+        .format-info {
+            background: rgba(26, 58, 95, 0.6);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 10px;
+            border: 1px solid rgba(0, 180, 216, 0.3);
+        }
+        
+        .format-info h4 {
+            color: var(--tech-blue);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .format-info ul {
+            list-style: none;
+            padding-left: 10px;
+        }
+        
+        .format-info li {
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .format-info li i {
+            color: var(--tech-blue);
+            font-size: 0.8rem;
+        }
+        
+        /* Workflow Section */
+        .workflow-section {
+            padding: 80px 0;
+            position: relative;
+        }
+        
+        .workflow-steps {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-top: 50px;
+            position: relative;
+        }
+        
+        .workflow-steps::before {
+            content: '';
+            position: absolute;
+            top: 60px;
+            left: 10%;
+            width: 80%;
+            height: 3px;
+            background: var(--tech-blue);
+            z-index: 1;
+        }
+        
+        .step {
+            position: relative;
+            width: 20%;
+            min-width: 200px;
+            text-align: center;
+            padding: 20px;
+            z-index: 2;
+        }
+        
+        .step-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--ocean-blue);
+            border: 3px solid var(--tech-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 2rem;
+            color: var(--tech-blue);
+            transition: all 0.3s ease;
+        }
+        
+        .step:hover .step-icon {
+            background: var(--tech-blue);
+            color: var(--deep-blue);
+            transform: scale(1.1);
+        }
+        
+        .step h4 {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            color: var(--light-blue);
+        }
+        
+        /* Footer */
+        footer {
+            padding: 60px 0 30px;
+            background: rgba(5, 15, 30, 0.9);
+            text-align: center;
+            position: relative;
+        }
+        
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .footer-content p {
+            color: var(--text-gray);
+            margin-bottom: 30px;
+            line-height: 1.8;
+        }
+        
+        .copyright {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(0, 180, 216, 0.2);
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive Adjustments */
+        @media (max-width: 992px) {
+            .workflow-steps {
+                justify-content: center;
+            }
+            
+            .step {
+                width: 45%;
+                margin-bottom: 40px;
+            }
+            
+            .workflow-steps::before {
+                display: none;
+            }
+            
+            .video-player {
+                height: 400px;
+            }
+            
+            .tech-highlight {
+                flex-direction: column;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .section-header h2 {
+                font-size: 2rem;
+            }
+            
+            .hero-stats {
+                gap: 20px;
+            }
+            
+            .stat-box {
+                min-width: 150px;
+                padding: 15px;
+            }
+            
+            .stat-value {
+                font-size: 2rem;
+            }
+            
+            .step {
+                width: 100%;
+                margin-bottom: 40px;
+            }
+            
+            .video-player {
+                height: 300px;
+            }
+            
+            .video-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .video-actions {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .upload-btn, .video-btn {
+                width: 100%;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .video-player {
+                height: 250px;
+            }
+            
+            .logo {
+                font-size: 2rem;
+            }
+            
+            .logo i {
+                font-size: 2.5rem;
+            }
+            
+            .chip-image .chip-img-container {
+                height: 180px;
+            }
+        }
+        
+        /* Animation */
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(0, 180, 216, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(0, 180, 216, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 180, 216, 0); }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+            border-radius: 50%;
+        }
+        
+        /* 视频控制条 */
+        .custom-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 15px;
+            width: 100%;
+            padding: 10px 0;
+        }
+        
+        .control-btn {
+            background: rgba(26, 58, 95, 0.8);
+            border: 1px solid var(--tech-blue);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--light-blue);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+        }
+        
+        .control-btn:hover {
+            background: var(--tech-blue);
+            color: var(--deep-blue);
+            transform: scale(1.1);
+        }
+        
+        .volume-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .volume-slider {
+            width: 100px;
+            -webkit-appearance: none;
+            height: 6px;
+            background: rgba(144, 224, 239, 0.3);
+            border-radius: 5px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        
+        .volume-slider:hover {
+            background: rgba(144, 224, 239, 0.5);
+        }
+        
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--tech-blue);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .volume-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+        
+        /* 状态指示灯 */
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 15px;
+            justify-content: center;
+        }
+        
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #4CAF50;
+            box-shadow: 0 0 10px rgba(76, 175, 80, 0.7);
+            animation: pulse 2s infinite;
+        }
+        
+        .status-text {
+            font-size: 0.9rem;
+            color: var(--text-gray);
+        }
+        
+        /* 视频操作按钮 */
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+            width: 100%;
+        }
+        
+        .action-btn {
+            background: var(--tech-blue);
+            color: var(--deep-blue);
+            border: none;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 220px;
+            justify-content: center;
+            font-size: 1.1rem;
+        }
+        
+        .action-btn.secondary {
+            background: rgba(26, 58, 95, 0.8);
+            color: var(--light-blue);
+            border: 1px solid var(--tech-blue);
+        }
+        
+        .action-btn:hover {
+            background: var(--light-blue);
+            color: var(--deep-blue);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 180, 216, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-water pulse"></i>
+                <h1>智能水上救生系统</h1>
+            </div>
+            <p class="tagline">基于rk3588机器视觉与自主救援技术，革新水上救援模式，守护水域安全</p>
+            
+            <div class="hero-stats">
+                <div class="stat-box">
+                    <div class="stat-value">95%</div>
+                    <div class="stat-label">识别准确率</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value">30 FPS</div>
+                    <div class="stat-label">实时图像处理</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value">6 TOPS</div>
+                    <div class="stat-label">超强算力</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value">< 4min</div>
+                    <div class="stat-label">黄金救援时间</div>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Technology Section - 更新了图片展示 -->
+    <section class="tech-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>核心技术规格</h2>
+                <p>强大的硬件基础与智能算法融合</p>
+            </div>
+            
+            <div class="tech-highlight">
+                <div class="chip-image">
+                    <h3>RK3588 核心处理器</h3>
+                    <div class="chip-img-container">
+                        <img src="/222.jpg" alt="RK3588芯片">
+                    </div>
+                    <p>多核异构架构 | 6TOPS算力 | 8nm工艺</p>
+                </div>
+                
+                <div class="chip-specs">
+                    <div class="spec-item">
+                        <div class="spec-title">
+                            <i class="fas fa-brain"></i>
+                            <span>AI处理能力</span>
+                        </div>
+                        <div class="spec-value">6 TOPS 算力</div>
+                        <p>支持INT4/INT8/INT16混合量化，满足复杂场景实时分析需求</p>
+                    </div>
+                    
+                    <div class="spec-item">
+                        <div class="spec-title">
+                            <i class="fas fa-camera"></i>
+                            <span>视觉处理</span>
+                        </div>
+                        <div class="spec-value">48MP ISP处理</div>
+                        <p>支持HDR10+，多摄像头同步处理，强光逆光场景优化</p>
+                    </div>
+                    
+                    <div class="spec-item">
+                        <div class="spec-title">
+                            <i class="fas fa-bolt"></i>
+                            <span>能效控制</span>
+                        </div>
+                        <div class="spec-value">8nm工艺制程</div>
+                        <p>高性能与低功耗平衡，单次充电续航时间超过8小时</p>
+                    </div>
+                    
+                    <div class="spec-item">
+                        <div class="spec-title">
+                            <i class="fas fa-network-wired"></i>
+                            <span>通信模块</span>
+                        </div>
+                        <div class="spec-value">AX210 WIFI6E</div>
+                        <p>三频5374Mbps，支持远程实时监控与控制</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Solution Section -->
+    <section class="solution-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>技术创新方案</h2>
+                <p>融合光电感知与自主救援的智能系统</p>
+            </div>
+            
+            <div class="solution-container">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-microchip"></i>
+                    </div>
+                    <h3>超强算力核心</h3>
+                    <p>采用瑞芯微RK3588芯片，6TOPS算力结合多核异构架构，保障复杂场景下实时数据处理能力，为智能决策提供强大支持。</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <h3>光电感知系统</h3>
+                    <p>优化YOLOv8算法实现每秒30帧水域画面解析，通过高清摄像头与红外光电传感器融合，强光、逆光环境下准确率超95%。</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-route"></i>
+                    </div>
+                    <h3>智能导航救援</h3>
+                    <p>基于光电传感器反馈数据定位，自主规划最短路径，结合无刷电机与水下推进器实现救生圈的快速精准投放。</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-satellite-dish"></i>
+                    </div>
+                    <h3>全链路闭环系统</h3>
+                    <p>AX210通信模块配合上位机软件，实时同步数据至管理平台，实现"智能感知-算法决策-自主救援-风险预警"全流程自动化。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Video Section - 更新版 -->
+    <section class="video-section">
+        <div class="container">
+            <div class="section-header">
+                <h2><i class="fas fa-video"></i> Real-Time RESCUE Videos</h2>
+                <p>实时监控与救援演示</p>
+            </div>
+            
+            <div class="video-container">
+                <div class="video-card">
+                    <div class="video-player" id="videoPlayer">
+                        <div class="video-placeholder" id="videoPlaceholder">
+                            <i class="fas fa-play-circle"></i>
+                            <h3>水上救援系统演示</h3>
+                            <p>点击播放按钮查看实时监控画面</p>
+                        </div>
+                        <video id="demoVideo" style="display: none;">
+                            <source id="videoSource" type="video/mp4">
+                            您的浏览器不支持视频播放
+                        </video>
+                    </div>
+                    
+                    <div class="custom-controls" id="customControls" style="display: none;">
+                        <button class="control-btn" id="playPauseBtn">
+                            <i class="fas fa-play"></i>
+                        </button>
+                        <div class="volume-container">
+                            <button class="control-btn" id="muteBtn">
+                                <i class="fas fa-volume-up"></i>
+                            </button>
+                            <input type="range" class="volume-slider" id="volumeSlider" min="0" max="1" step="0.1" value="1">
+                        </div>
+                        <button class="control-btn" id="fullscreenBtn">
+                            <i class="fas fa-expand"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="status-indicator">
+                        <div class="status-dot"></div>
+                        <div class="status-text">系统运行中 - 实时监控已激活</div>
+                    </div>
+                    
+                    <div class="action-buttons">
+                        <button class="action-btn" id="uploadBtn">
+                            <i class="fas fa-camera"></i>
+                            捕获实时图像
+                        </button>
+                        <button class="action-btn secondary" id="demoBtn1">
+                            <i class="fas fa-robot"></i>
+                            查看报警信息
+                        </button>
+                        <button class="action-btn secondary" id="demoBtn2">
+                            <i class="fas fa-life-ring"></i>
+                            区域设备管理
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="upload-container">
+                    <input type="file" id="videoUpload" accept="video/*" style="display: none;">
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Workflow Section -->
+    <section class="workflow-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>救援工作流程</h2>
+                <p>"黄金四分钟"内的全自动救援闭环</p>
+            </div>
+            
+            <div class="workflow-steps">
+                <div class="step">
+                    <div class="step-icon">
+                        <i class="fas fa-satellite"></i>
+                    </div>
+                    <h4>智能感知</h4>
+                    <p>多光谱传感器实时监测水域，AI算法精准识别异常行为与溺水信号</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-icon">
+                        <i class="fas fa-map-marked-alt"></i>
+                    </div>
+                    <h4>精准定位</h4>
+                    <p>融合GPS、光电传感器与视觉数据，厘米级定位溺水者位置</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-icon">
+                        <i class="fas fa-route"></i>
+                    </div>
+                    <h4>路径规划</h4>
+                    <p>动态水流建模，实时计算最优救援路径，避开障碍物</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-icon">
+                        <i class="fas fa-tachometer-alt"></i>
+                    </div>
+                    <h4>快速救援</h4>
+                    <p>双推进器系统以1.5m/s速度抵达，自动投放救生装置</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-icon">
+                        <i class="fas fa-broadcast-tower"></i>
+                    </div>
+                    <h4>实时预警</h4>
+                    <p>全过程数据回传管理平台，通知救生人员前往支援</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <h3>守护水域安全 · 拯救宝贵生命</h3>
+                <p>本系统融合前沿光电感知技术与自主救援算法，革新传统水上救援模式，填补了开放式水域智能救援的市场空白。通过实时数据处理、精准目标识别、最优路径规划和快速自主救援，大幅提升"黄金四分钟"内的施救成功率，为水上活动参与者提供全天候安全保障。</p>
+            </div>
+            <div class="copyright">
+                &copy; 2025 智能水上救生系统 | 基于rk3588的机器视觉与自主救援技术
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const uploadBtn = document.getElementById('uploadBtn');
+            const videoUpload = document.getElementById('videoUpload');
+            const demoVideo = document.getElementById('demoVideo');
+            const videoSource = document.getElementById('videoSource');
+            const videoPlaceholder = document.getElementById('videoPlaceholder');
+            const customControls = document.getElementById('customControls');
+            const playPauseBtn = document.getElementById('playPauseBtn');
+            const muteBtn = document.getElementById('muteBtn');
+            const volumeSlider = document.getElementById('volumeSlider');
+            const fullscreenBtn = document.getElementById('fullscreenBtn');
+            const demoBtn1 = document.getElementById('demoBtn1');
+            const demoBtn2 = document.getElementById('demoBtn2');
+            
+            // 默认演示视频 - 使用可播放的公共视频资源
+            const demoVideo1 = 'https://assets.codepen.io/3364143/sample.mp4';
+            const demoVideo2 = 'https://assets.codepen.io/3364143/sample-2.mp4';
+            
+            // 点击上传按钮触发文件选择
+            uploadBtn.addEventListener('click', function() {
+                videoUpload.click();
+            });
+            
+            // 文件选择处理
+            videoUpload.addEventListener('change', function(e) {
+                if (e.target.files && e.target.files[0]) {
+                    const file = e.target.files[0];
+                    const fileType = file.type;
+                    
+                    // 检查文件类型
+                    if (!fileType.includes('video')) {
+                        alert('请上传视频文件！');
+                        return;
+                    }
+                    
+                    // 检查文件大小（最大100MB）
+                    if (file.size > 100 * 1024 * 1024) {
+                        alert('文件大小不能超过100MB！');
+                        return;
+                    }
+                    
+                    // 直接加载视频
+                    setTimeout(() => {
+                        const videoUrl = URL.createObjectURL(file);
+                        loadVideo(videoUrl);
+                    }, 300);
+                }
+            });
+            
+            // 加载并播放视频
+            function loadVideo(url) {
+                videoSource.src = url;
+                demoVideo.load();
+                
+                demoVideo.style.display = 'block';
+                videoPlaceholder.style.display = 'none';
+                customControls.style.display = 'flex';
+                
+                // 播放视频
+                setTimeout(() => {
+                    demoVideo.play();
+                    playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                }, 500);
+            }
+            
+            // 播放控制
+            playPauseBtn.addEventListener('click', function() {
+                if (demoVideo.paused) {
+                    demoVideo.play();
+                    playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                } else {
+                    demoVideo.pause();
+                    playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+                }
+            });
+            
+            // 静音控制
+            muteBtn.addEventListener('click', function() {
+                demoVideo.muted = !demoVideo.muted;
+                muteBtn.innerHTML = demoVideo.muted ? 
+                    '<i class="fas fa-volume-mute"></i>' : 
+                    '<i class="fas fa-volume-up"></i>';
+            });
+            
+            // 音量控制
+            volumeSlider.addEventListener('input', function() {
+                demoVideo.volume = volumeSlider.value;
+            });
+            
+            // 全屏控制
+            fullscreenBtn.addEventListener('click', function() {
+                if (demoVideo.requestFullscreen) {
+                    demoVideo.requestFullscreen();
+                } else if (demoVideo.mozRequestFullScreen) {
+                    demoVideo.mozRequestFullScreen();
+                } else if (demoVideo.webkitRequestFullscreen) {
+                    demoVideo.webkitRequestFullscreen();
+                } else if (demoVideo.msRequestFullscreen) {
+                    demoVideo.msRequestFullscreen();
+                }
+            });
+            
+            // 视频结束事件
+            demoVideo.addEventListener('ended', function() {
+                playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+            });
+            
+            // 点击占位符播放默认视频
+            videoPlaceholder.addEventListener('click', function() {
+                loadVideo(demoVideo1);
+            });
+            
+            // 示例视频按钮1
+            demoBtn1.addEventListener('click', function() {
+                loadVideo(demoVideo1);
+            });
+            
+            // 示例视频按钮2
+            demoBtn2.addEventListener('click', function() {
+                loadVideo(demoVideo2);
+            });
+        });
+    </script>
+</body>
+</html>
